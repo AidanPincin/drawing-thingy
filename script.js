@@ -62,7 +62,7 @@ new Button(5, 390, '#E0AC69'), new Button(5,445,'#A52A2A'), new Button(5,500,'#D
 new Button(60, 60, '#C0C0C0'), new Button(60, 115, '#d4af37'), new Button(60, 170, '#7d0000'), 
 new Button(60, 225, '#007d00'), new Button(60, 280, '#00007d'), new Button(60, 335, '#ffffff')]
 update()
-window.addEventListener('mousemove', function(e){
+function move(e){
     mousex = Math.round((e.pageX)/pixelSize)*pixelSize
     mousey = Math.round((e.pageY)/pixelSize)*pixelSize
     if (draw == true){
@@ -78,8 +78,8 @@ window.addEventListener('mousemove', function(e){
             pixels.push(new Pixel(mousex-10-pixelSize/2, mousey-10-pixelSize/2, color))
         }
     }
-})
-window.addEventListener('mousedown', function(e){
+}
+function onClick(e){
     const buttonClicked = buttons.find((b) => b.wasClicked(e))
     if (buttonClicked != undefined){
         color = buttonClicked.color
@@ -90,5 +90,10 @@ window.addEventListener('mousedown', function(e){
         pixels.push(new Pixel(mousex-10-pixelSize/2, mousey-10-pixelSize/2, color))
         draw = true
     }
-})
+}
+window.addEventListener('mousemove', move(e))
+window.addEventListener('mousedown', onClick(e))
 window.addEventListener('mouseup', function(e){draw = false})
+window.addEventListener('touchstart', onClick(e))
+window.addEventListener('touchend', function(e){draw = false})
+window.addEventListener('touchmove', move(e))
